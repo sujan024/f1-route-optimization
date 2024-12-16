@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--Webpage title-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Race Calendar Optimization</title>
+    <link href="{{ url_for('static', filename='styles/style.css')}}" rel="stylesheet" />
+</head>
+
+<!--Body-->
+<body>
+    <!--Header-->
+    <h1 align="center">F1 Race Calendar Optimization</h1>
+    
+    <!--Page nagivation-->
+    <div class="h_container">
+        <form action="/index">
+            <button type="submit">Project Overview</button>
+        </form>
+
+        <form action="/testmodelinit">
+            <button type="submit">Test FOL TSP Model</button>
+        </form>
+
+        <form action="/comparemodelsinit">
+            <button type="submit">Compare Models</button>
+        </form>
+    </div>
+    
+    <br>
+
+    <!--Model input-->
+    <div class="model_page_container">
+        <div class="v_container">
+            <div class="text_container" style="background-color: #ff1e007d;">
+                <b>Solve Type</b>
+                <p>{{selected_solve_type}}</p>
+                <br>
+                <p><b>Start City: </b>{{selected_start_city}}</p>
+                <p><b>End City: </b>{{selected_end_city}}</p>
+            </div>
+        
+            <form action="/comparemodelsresults">     
+                <div class="selection_container">
+                    <!--Solve type dropdown-->
+                    <div class="dropdown_container">
+                        <label for="solve">Select Solve Type</label>
+                        <select id="solve" name="solve" method="GET" action="/">
+                            <option value="" disabled selected>Select your solve type</option>
+                            <option value="FOL TSP">Freely-Open-Loop TSP</option>
+                            <option value="NN">Nearest Neighbor</option>
+                            <option value="NI">Nearest Insertion</option>
+                            <option value="DEL TSP">Deleted TSP</option>
+                        </select>
+                    </div>
+
+                    <!--City dropdown select-->
+                    <div class="dropdown_container">
+                        <label for="cities">Select Cities</label>
+                        <select id="cities" name= "cities" method="GET" action="/" multiple>
+                            <option value="" disabled selected>Select your cities</option>
+                            {% for city in cities %}
+                            <option value= "{{city}}">{{city}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+        
+                    <!--Start city dropdown-->
+                    <div class="dropdown_container">
+                        <label for="startcity">Select Start City</label>
+                        <select id="startcity" name="startcity" method="GET" action="/" disabled>
+                            <option>Select cities first</option>
+                        </select>
+                    </div>
+        
+                    <!--End city dropdown-->
+                    <div class="dropdown_container">
+                        <label for="endcity">Select End City</label>
+                        <select id="endcity" name="endcity" method="GET" action="/" disabled>
+                            <option>Select a start city first</option>
+                        </select>
+                    </div>
+
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="map_container">
+            {{ map_html|safe }}
+        </div>
+        
+        <div class="v_container">
+            <div class="text_container">
+                <b>Total Distance</b>
+                <p>{{distance}} km</p>
+    
+                <br>
+    
+                <b>Optimal Route</b>
+                <p>{{path|safe}}</p>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script>
+        const citiesDropdown = document.getElementById('cities');
+        const startCityDropdown = document.getElementById('startcity');
+        const endCityDropdown = document.getElementById('endcity');
+        const solveDropdown = document.getElementById('solve');
+    
+        // Function to update the start city dropdown
+        function updateStartCityDropdown() {
+            // Get selection option from solve dropdown
+            const selectedSolve = solveDropdown.value;
+
+            // If selecting DEL TSP, then prevent start city selection
+            if (selectedSolve == 'DEL TSP') {
+                startCityDropdown.innerHTML = '<option>Not available for model</option>';
+                startCityDropdown.disabled = true;
+
+            // If selecting a different model, then populate start city dropdown
+            } else {
+                // Getting chosen cities options
+                const selectedOptionsStartCity = Array.from(citiesDropdown.selectedOptions);
+
+                if (selectedOptionsStartCity.length > 1) {
+                    // Clear the start city dropdown
+                    startCityDropdown.innerHTML = '';
+                
+                    startCityDropdown.disabled = false; // Enable the start city dropdown
+        
+                    // Populate the start city dropdown with the selected cities
+                    const placeholderOption = document.createElement('option');
+                    placeholderOption.textContent = 'Select a start city'
+                    placeholderOption.value = '';
+                    placeholderOption.disabled = true;
+                    placeholderOption.selected = true;
+                    startCityDropdown.appendChild(placeholderOption)
+
+                    selectedOptionsStartCity.forEach(option => {
+                        const newOption = document.createElement('option');
+                        newOption.value = option.value;
+                        newOption.textContent = option.textContent;
+                        startCityDropdown.appendChild(newOption);
+                    });
+                } else {
+                    startCityDropdown.innerHTML = '<option>Select cities first</option>';
+                    startCityDropdown.disabled = true;
+                }
+            }
+        }
+
+        // Function to populate the end city dropdown
+        function updateEndCityDropdown() {
+            // Get selection option from solve dropdown
+            const selectedSolve = solveDropdown.value;
+
+            // If selecting NN, NI, or DEL TSP, then prevent start city selection
+            if (selectedSolve == 'DEL TSP' || selectedSolve == 'NN' || selectedSolve == 'NI') {
+                if (selectedSolve == 'NN') {
+                    endCityDropdown.innerHTML = '<option>Not available for model</option>';
+                }
+                if (selectedSolve == 'NI') {
+                    endCityDropdown.innerHTML = '<option>Not available for model</option>';
+                }
+                if (selectedSolve == 'DEL TSP') {
+                    endCityDropdown.innerHTML = '<option>Not available for model</option>';
+                }
+                endCityDropdown.disabled = true;
+
+            // If selecting a different model, then populate end city dropdown
+            } else {
+                // Getting chosen start city
+                const startCityValue = startCityDropdown.value;
+                
+                // Get selected options from the cities dropdown and take out the chosen start city
+                const selectedOptionsEndCity = Array.from(citiesDropdown.selectedOptions).filter(option => option.value !== startCityValue);
+
+                // If there are selected cities, populate the end city dropdown
+                if (selectedOptionsEndCity.length > 1) {
+                    // Clear the end city dropdown
+                    endCityDropdown.innerHTML = '';
+                    
+                    endCityDropdown.disabled = false; // Enable the end city dropdown
+
+                    // Populate the end city dropdown with the selected options
+                    const placeholderOption = document.createElement('option');
+                    placeholderOption.textContent = 'Select an end city'
+                    placeholderOption.value = '';
+                    placeholderOption.disabled = true;
+                    placeholderOption.selected = true;
+                    endCityDropdown.appendChild(placeholderOption)
+
+                    selectedOptionsEndCity.forEach(option => {
+                        const newOption = document.createElement('option');
+                        newOption.value = option.value;
+                        newOption.textContent = option.textContent;
+                        endCityDropdown.appendChild(newOption);
+                    });
+                } else {
+                    endCityDropdown.innerHTML = '<option>Select a start city first</option>';
+                    endCityDropdown.disabled = true;
+                }
+            }
+        }
+
+    
+        // Add event listeners to monitor changes in the cities dropdown and start city dropdown
+        solveDropdown.addEventListener('change', updateStartCityDropdown);
+        solveDropdown.addEventListener('change', updateEndCityDropdown);
+        citiesDropdown.addEventListener('change', updateStartCityDropdown);
+        startCityDropdown.addEventListener('change', updateEndCityDropdown);
+    </script>  
+
+</body>
+</html>

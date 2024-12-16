@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--Webpage title-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Race Calendar Optimization</title>
+    <link href="{{ url_for('static', filename='styles/style.css')}}" rel="stylesheet" />
+</head>
+
+<!--Webpage-->
+<body>
+    <!--Header-->
+    <h1 align="center">F1 Race Calendar Optimization</h1>
+
+    <!--Page navigation-->
+    <div class="h_container">
+        <form action="/index">
+            <button type="submit">Project Overview</button>
+        </form>
+    
+        <form action="/testmodelinit">
+            <button type="submit">Test FOL TSP Model</button>
+        </form>
+    
+        <form action="/comparemodelsinit">
+            <button type="submit">Compare Models</button>
+        </form>
+    </div>
+
+    <br><br>
+
+    <!--Body-->
+    <div class="v_container">
+        <p>Every year, Formula One travels around the world to put on a racing spectacle. From Mexico to Japan, race locations span 5 continents and over 20 countries.
+            While the fans are able to enjoy the racing from the sidelines or at home, the planning behind these races is a big challenge.
+            Specifically, the task of moving around all these tracks, sometimes in just a few days during back-to-back race weekends, results in a logistical nightmare. 
+            The 2025 Formula One race calendar visits 24 tracks as seen below. Starting in Melbourne, Australia and ending in Abu Dhabi, UAE, <b>the 2025 Formula One race calender will be 114,494 km long!</b>
+        </p>
+    
+        <div class="v_container" style="align-items: center;">
+            <div class="map_container" style="width: 70%;">
+                {{ map_html|safe }}
+            </div>
+        </div>
+        
+        <p>
+            As you can see, this race calendar involves multiple trips across the world with some of the longest distances being from Singapore to Austin and Las Vegas to Lusail. 
+            There are many reasons why these large travel distances exist such as location climates, religious events, and track contracts.
+            Furthermore, teams often travel back to thier home bases between races, adding even more travel to the already busy schedule.
+            However, <b>if the goal was just to visit every track on the calendar once, what would be the shortest path?</b>
+        </p>
+        <br>
+        <p>
+            In this project, <b>I aimed to answer that question by formulating and coding an optimization model that finds the shortest path among a given set of cities.</b>
+            I based this model off an existing optimization model to solve the Traveling Salesman Problem (TSP). 
+            The TSP involves finding the shortest <i>cycle</i> among a set of cities that starts and ends at the same city. 
+            Variations of the TSP exist, one being the Freely-Open-Loop (FOL) TSP, which involves finding the shortest <i>path</i> among a set of cities that starts and ends at different cities.
+        </p>
+        <br>
+        <p>
+            Using the navigation buttons above, you can test the FOL TSP model I created under different city parameters and compare it to other heuristic models that solve the problem.
+            The inspiration for this project came from a <a href="https://youtu.be/8ShmR9yBtiE?si=Y1Tzz430_MOeyBH8">YouTube video</a> I found where the Nearest Neighbor method was used to solve this problem.
+            And for a more detailed look at the code behind the models presented here, you can check out my GitHub page for a Jupyter Notebook file.
+        </p>
+    </div>
+
+</body>
+</html>

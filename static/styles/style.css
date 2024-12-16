@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 2rem;
+    background-color: #ffffff;
+    color: #15151E;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.25rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+input, button{
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    border-radius: 15px;
+    background-color: #FF1E00;
+    color: white;
+}
+
+select {
+    font-size: 1.25rem;
+    padding: 0.5rem;
+    border-radius: 15px;
+    background-color: white;
+    color: gray;
+}
+
+.dropdown_container {
+    text-align: center; /* Center-aligns child elements like the label */
+    margin: 1rem 0;
+}
+
+.dropdown_container label {
+    display: block; /* Ensures label takes a new line */
+    margin-bottom: 0.5rem; /* Space between label and dropdown */
+}
+
+.dropdown {
+    display: block;
+    width: 100%;
+}
+
+.input_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px
+}
+
+.h_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px
+}
+
+.v_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px
+}
+
+.model_page_container {
+    display: flex;
+    width: 100vw;
+    gap: 20px;
+    padding: 2rem;
+    font-size: 1.25rem;
+    align-items: flex-start;
+}
+
+.selection_container {
+    flex: 0 0 30%;
+    padding: 20px;
+    background-color: #f4f4f4;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid #333;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.text_container {
+    flex: 0 0 30%;
+    padding: 20px;
+    background-color: #f4f4f4;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid #333;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.results_container {
+    display: flex;
+    width: 100vw;
+    gap: 20px;
+    padding: 2rem;
+    font-size: 1.25rem;
+    align-items: flex-start;
+}
+
+.map_container {
+    flex: 1;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #333;
+    border-radius: 10px;
+    overflow: hidden;
+}
