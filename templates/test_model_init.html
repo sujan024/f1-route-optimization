@@ -12,7 +12,7 @@
 <!--Body-->
 <body>
     <!--Header-->
-    <h1 align="center">F1 Race Calendar Optimization</h1>
+    <h1 align="center">Formula One Race Calendar Optimization</h1>
     
     <!--Page nagivation-->
     <div class="h_container">
@@ -21,11 +21,11 @@
         </form>
 
         <form action="/testmodelinit">
-            <button type="submit">Test FOL TSP Model</button>
+            <button type="submit" style="background-color: gainsboro; color: red;">Test FOL TSP Model</button>
         </form>
 
         <form action="/comparemodelsinit">
-            <button type="submit">Compare Models</button>
+            <button type="submit">Compare Heuristic Models</button>
         </form>
     </div>
     
@@ -66,15 +66,14 @@
         </form>
 
         <div class="text_container" style="flex: 1; text-align: left;">
-            <p>On this page, you will be able to test the Freely-Open-Loop TSP model with various city parameters.</p>
-            <br>
-            <p>The Freely-Open-Loop (FOL) TSP model is an optimization model that finds the set of edges between cities that results in the shortest distance traveled while visiting every city exactly once.
+            <p>The <b>Freely-Open-Loop (FOL) TSP</b> model is an optimization model that finds the set of edges between cities that results in the shortest distance traveled while visiting every city exactly once.
                 While a normal TSP model results in a loop that starts and ends at the same city, the FOL TSP model starts and ends at different cities, creating a path.</p>
             <br>
             <p>You can test the FOL TSP model with the 2025 F1 venues using the dropdowns to the left.
                 You have the option to select which cities you'd like to visit, a specific start city, and a specific end city. 
-                The start and end city parameters are optional, but you must choose at least two cities from the Select Cities dropdown to select a start city, and you must select a city from the Select Start City dropdown to select an end city.
-                If all the options are left blank, then the FOL TSP model will find the shortest path among all the cities.</p>
+                The start and end city parameters are optional, but you must choose at least two cities from the Select Cities dropdown to select a start city, and you must select a city from the Select Start City dropdown to select an end city.</p>
+            <br>
+            <p>If all the options are left blank, then the FOL TSP model will find the shortest path among all the cities.</p>
         </div>
     </div>
     

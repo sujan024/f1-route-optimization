@@ -12,7 +12,7 @@
 <!--Body-->
 <body>
     <!--Header-->
-    <h1 align="center">F1 Race Calendar Optimization</h1>
+    <h1 align="center">Formula One Race Calendar Optimization</h1>
     
     <!--Page nagivation-->
     <div class="h_container">
@@ -25,7 +25,7 @@
         </form>
 
         <form action="/comparemodelsinit">
-            <button type="submit">Compare Models</button>
+            <button type="submit" style="background-color: gainsboro; color: red;">Compare Heuristic Models</button>
         </form>
     </div>
     
@@ -80,23 +80,23 @@
 
         <div class="text_container" style="flex: 1; text-align: left;">
             <p>On this page, you will be able to compare the FOL TSP model to a few heuristic models that also find the shortest path among selected cities.
-                To show the comparison better, this page utilizes the capitals of the continental US states rather than the 2025 F1 venues.
+                To show the comparison better, this page utilizes the state capitals of the continental United States rather than the 2025 F1 venues.
             </p>
             <br>
-            <p><b>Nearest Neighbor: </b>This model finds the shortest path by starting at a specific city then visiting the city closest to it. This process repeats until all the cities are visited.
+            <p><b>Nearest Neighbor: </b>This model finds the shortest path by starting at a specific city then visiting the next, unvisited city closest to it. This process repeats until all the cities are visited.
             If a specific start city is not chosen, then the model will test the algorithm with each of the selected cities as the start city then return the shortest path found.
             Due to the nature of this model, a specific end city cannot be chosen.</p>
             <br>
-            <p><b>Nearest Insertion: </b>This model finds the shortest path by starting at a specific city then visiting the city closest to it. 
-                However, the next iteration compares the closest cities to both cities on the end of the current path and visits the closest city of the two. This process repeats until all the cities are visited.
-            Though you will have the option to select a start city, that city may not necessarily be the first city in the path as the mdoel looks at both ends of the developing path.
+            <p><b>Nearest Insertion: </b>This model finds the shortest path by starting at a specific city then visiting the next, unvisited city closest to it. 
+            However, the next iteration compares the closest, unvisited cities to both cities on the end of the current path and visits the closest city of the two. This process repeats until all the cities are visited.
+            Though you have the option to select a start city, that city may not necessarily be the first city in the path as the model looks at both ends of the developing path.
             And similar to the Nearest Neighbor model, if a specific start city is not chosen, then the model will test the algorithm with each of the selected cities as the start city then return the shortest path found.
             Due to the nature of this model, a specific end city cannot be chosen.</p>
             <br>
-            <p><b>Deleted TSP: </b>This model finds the shortest path by finding the shortest route (loop) that visits every city using the TSP model then removing the longest edge.
+            <p><b>Deleted TSP: </b>This model finds the shortest path by using the regular TSP model to find the shortest route (loop) then removing the longest edge in that route.
             Due to the nature of this model, a specific start city and end city cannot be chosen.</p>
             <br>
-            <p>If all the options are left blank, then the FOL TSP model will find the shortest path among all the cities..</p>
+            <p>If all the options are left blank, then the FOL TSP model will find the shortest path among all the cities.</p>
         </div>
     </div>
 

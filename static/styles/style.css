@@ -117,3 +117,7 @@ select {
     border-radius: 10px;
     overflow: hidden;
 }
+
+.trademark {
+    font-size: 0.9em;
+}
